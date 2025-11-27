@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JCS Independent</title>
+
+<style>
+    body {
+        background: #f2f2f2;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 40px;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    #question {
+        font-size: 32px;
+        margin: 20px 0;
+        font-weight: bold;
+    }
+
+    .btn {
+        display: block;
+        margin: 10px auto;
+        padding: 15px;
+        width: 200px;
+        font-size: 22px;
+        border-radius: 8px;
+        border: none;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #45a049;
+    }
+
+    #result {
+        font-size: 26px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>JCS Independent</h1>
+
+<div id="question">Loading...</div>
+
+<button class="btn" onclick="checkAnswer(0)" id="btn0"></button>
+<button class="btn" onclick="checkAnswer(1)" id="btn1"></button>
+<button class="btn" onclick="checkAnswer(2)" id="btn2"></button>
+
+<div id="result"></div>
+
+<script>
+    let correctAnswer = 0;
+
+    function newQuestion() {
+        let a = Math.floor(Math.random() * 12) + 1; // 1–12
+        let b = Math.floor(Math.random() * 12) + 1;
+
+        correctAnswer = a * b;
+
+        document.getElementById("question").textContent = a + " × " + b + " = ?";
+
+        // Generate answers
+        let answers = [
+            correctAnswer,
+            correctAnswer + Math.floor(Math.random() * 5) + 1,
+            correctAnswer - Math.floor(Math.random() * 5) - 1
+        ];
+
+        // Shuffle
+        answers.sort(() => Math.random() - 0.5);
+
+        // Assign to buttons
+        for (let i = 0; i < 3; i++) {
+            document.getElementById("btn" + i).textContent = answers[i];
+        }
+
+        document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(i) {
+        let chosen = document.getElementById("btn" + i).textContent;
+
+        if (parseInt(chosen) === correctAnswer) {
+            document.getElementById("result").textContent = "Correct! 🎉";
+        } else {
+            document.getElementById("result").textContent = "Try again!";
+        }
+
+        setTimeout(newQuestion, 800);
+    }
+
+    newQuestion();
+</script>
+
+</body>
+</html>
